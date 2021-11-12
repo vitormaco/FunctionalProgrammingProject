@@ -1,5 +1,10 @@
 run: build
-	./ftest
+	@echo "Starting execution"
+	./ftest test_cases/graph1.txt 0 5 out
+	@echo "Finished execution"
+	@echo ""
+	@echo "***** Output *****"
+	@cat out
 
 build:
 	@echo "building"
