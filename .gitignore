@@ -1,4 +1,4 @@
 *.cmo
 *.cmi
 ftest
-out
+*.out

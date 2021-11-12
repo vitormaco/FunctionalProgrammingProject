@@ -1,6 +1,6 @@
 open Graph
 open Printf
-    
+
 type path = string
 
 (* Format of text files:
@@ -32,9 +32,9 @@ let write_file path graph =
 
   (* Write all arcs *)
   e_iter graph (fun id1 id2 lbl -> fprintf ff "e %d %d %s\n" id1 id2 lbl) ;
-  
+
   fprintf ff "\n%% End of graph\n" ;
-  
+
   close_out ff ;
   ()
 
@@ -45,7 +45,7 @@ let read_node id graph line =
     Printf.printf "Cannot read node in line - %s:\n%s\n%!" (Printexc.to_string e) line ;
     failwith "from_file"
 
-(* Ensure that the given node exists in the graph. If not, create it. 
+(* Ensure that the given node exists in the graph. If not, create it.
  * (Necessary because the website we use to create online graphs does not generate correct files when some nodes have been deleted.) *)
 let ensure graph id = if node_exists graph id then graph else new_node graph id
 
@@ -68,7 +68,7 @@ let from_file path =
 
   let infile = open_in path in
 
-  (* Read all lines until end of file. 
+  (* Read all lines until end of file.
    * n is the current node counter. *)
   let rec loop n graph =
     try
@@ -88,14 +88,13 @@ let from_file path =
 
           (* It should be a comment, otherwise we complain. *)
           | _ -> (n, read_comment graph line)
-      in      
+      in
       loop n2 graph2
 
     with End_of_file -> graph (* Done *)
   in
 
   let final_graph = loop 0 empty_graph in
-  
+
   close_in infile ;
   final_graph
-  
