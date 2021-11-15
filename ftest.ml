@@ -26,7 +26,7 @@ let () =
 
 
 
-  let custom_graph = clone_nodes graph in
+  let custom_graph = gmap graph (fun x -> string_of_int ((int_of_string x)*2)) in
 
 
 
