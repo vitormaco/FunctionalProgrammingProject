@@ -26,11 +26,12 @@ let () =
 
 
 
-  let graph2 = clone_nodes graph in
+  let custom_graph = clone_nodes graph in
 
 
 
   (* Rewrite the graph that has been read. *)
-  let () = write_file outfile graph in
+  (* let () = write_file outfile graph in *)
+  let () = write_file outfile custom_graph in
 
   ()
