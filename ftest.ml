@@ -24,11 +24,11 @@ let () =
   (* Open file *)
   let graph = from_file infile in
 
+  let graph = gmap graph (fun x -> (int_of_string x)) in 
 
+  let custom_graph = add_arc graph 0 2 5 in
 
-  let custom_graph = gmap graph (fun x -> string_of_int ((int_of_string x)*2)) in
-
-
+  let custom_graph = gmap custom_graph (fun x -> string_of_int (x)) in 
 
   (* Rewrite the graph that has been read. *)
   (* let () = write_file outfile graph in *)
