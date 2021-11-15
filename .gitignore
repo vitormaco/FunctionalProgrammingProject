@@ -2,3 +2,4 @@
 *.cmi
 ftest
 *.out
+*.svg

@@ -21,3 +21,12 @@ build:
 clean:
 	@rm *.cmo *.cmi ftest
 	@echo "cleaned"
+
+gen_svgs:
+	@echo "generating"
+	@for viz_file in $(shell ls test_cases/*.viz); do dot -Tsvg $${viz_file} > $${viz_file::-4}.svg; done
+	@echo "generated"
+
+clean_svgs:
+	@rm test_cases/*.svg
+	@echo "cleaned"
