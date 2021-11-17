@@ -1,20 +1,26 @@
-digraph finite_state_machine {
+digraph viz_example {
+
+	# direction Left-Right
 	rankdir=LR;
-	size="8,5"
-	node [shape = doublecircle]; 0 3 4 8;
+
+	# highlight source and sink
+	node [shape = doublecircle]; 0 8;
+
+	# all nodes are circles
 	node [shape = circle];
-	0 -> 2 [label = "SS(B)"];
-	0 -> 1 [label = "SS(S)"];
-	1 -> 3 [label = "S($end)"];
-	2 -> 6 [label = "SS(b)"];
-	2 -> 5 [label = "SS(a)"];
-	2 -> 4 [label = "S(A)"];
-	5 -> 7 [label = "S(b)"];
-	5 -> 5 [label = "S(a)"];
-	6 -> 6 [label = "S(b)"];
-	6 -> 5 [label = "S(a)"];
-	7 -> 8 [label = "S(b)"];
-	7 -> 5 [label = "S(a)"];
-	8 -> 6 [label = "S(b)"];
-	8 -> 5 [label = "S(a)"];
+
+	0 -> 2 [label = "label1"];
+	0 -> 1 [label = "label2"];
+	1 -> 3 [label = "label3"];
+	2 -> 6 [label = "label4"];
+	2 -> 5 [label = "label5"];
+	2 -> 4 [label = "label6"];
+	5 -> 7 [label = "a"];
+	5 -> 5 [label = "b"];
+	6 -> 6 [label = "c"];
+	6 -> 5 [label = "d"];
+	7 -> 8 [label = "e"];
+	7 -> 5 [label = "f"];
+	8 -> 6 [label = "g"];
+	8 -> 5 [label = "h"];
 }
