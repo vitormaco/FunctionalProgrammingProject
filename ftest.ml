@@ -6,7 +6,12 @@ let () =
   (* Check the number of command-line arguments *)
   if Array.length Sys.argv <> 5 then
     begin
-      Printf.printf "\nUsage: %s infile source sink outfile\n\n%!" Sys.argv.(0) ;
+      Printf.printf
+        "\n ✻  Usage: %s infile source sink outfile\n\n%s%!" Sys.argv.(0)
+        ("    🟄  infile  : input file containing a graph\n" ^
+         "    🟄  source  : identifier of the source vertex (used by the ford-fulkerson algorithm)\n" ^
+         "    🟄  sink    : identifier of the sink vertex (ditto)\n" ^
+         "    🟄  outfile : output file in which the result should be written.\n\n") ;
       exit 0
     end ;
 
@@ -24,11 +29,11 @@ let () =
   (* Open file *)
   let graph = from_file infile in
 
-  let graph = gmap graph (fun x -> (int_of_string x)) in 
+  let graph = gmap graph (fun x -> (int_of_string x)) in
 
   let custom_graph = add_arc graph 0 2 5 in
 
-  let custom_graph = gmap custom_graph (fun x -> string_of_int (x)) in 
+  let custom_graph = gmap custom_graph (fun x -> string_of_int (x)) in
 
   (* Rewrite the graph that has been read. *)
   (* let () = write_file outfile graph in *)
