@@ -1,5 +1,5 @@
 *.cmo
 *.cmi
 ftest
-*.out
-*.svg
+test_cases/*.viz
+test_cases/*.svg

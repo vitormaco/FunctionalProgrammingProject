@@ -29,14 +29,12 @@ let () =
   (* Open file *)
   let graph = from_file infile in
 
+  (* Our code *)
   let graph = gmap graph (fun x -> (int_of_string x)) in
-
-  let custom_graph = add_arc graph 0 2 5 in
-
-  let custom_graph = gmap custom_graph (fun x -> string_of_int (x)) in
+  let graph = add_arc graph 0 2 5 in
+  let graph = gmap graph (fun x -> string_of_int (x)) in
 
   (* Rewrite the graph that has been read. *)
-  (* let () = write_file outfile graph in *)
-  let () = write_file outfile custom_graph in
+  let () = export_file_graphviz outfile graph _source _sink in
 
   ()

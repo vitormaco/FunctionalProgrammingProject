@@ -51,6 +51,26 @@ let write_file path graph =
   close_out ff ;
   ()
 
+let export_file_graphviz path graph source sink =
+
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "digraph my_graph {\n" ;
+  fprintf ff "\trankdir=LR;\n" ;
+  fprintf ff "\tnode [shape = doublecircle]; %d %d;\n" source sink ;
+  fprintf ff "\tnode [shape = circle];\n" ;
+  fprintf ff "\n" ;
+
+  (* Write all arcs *)
+  let _ = e_fold graph (fun count id1 id2 lbl -> fprintf ff "\t%d -> %d [label = \"%s\"];\n" id1 id2 lbl ; count + 1) 0 in
+
+  fprintf ff "}\n" ;
+
+  close_out ff ;
+  ()
+
 (* Reads a line with a node. *)
 let read_node graph line =
   try Scanf.sscanf line "n %f %f %d" (fun _ _ id -> new_node graph id)
