@@ -6,7 +6,7 @@ run: build
 	@echo ""
 	@cat test_cases/$(GRAPH).viz
 	@dot -Tsvg test_cases/$(GRAPH).viz > test_cases/$(GRAPH).svg;
-	@eog test_cases/$(GRAPH).svg
+	@xdg-open test_cases/$(GRAPH).svg
 
 build:
 	@ocamlc -c graph.mli graph.ml gfile.mli gfile.ml tools.mli tools.ml
