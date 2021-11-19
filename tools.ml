@@ -15,7 +15,7 @@ let rec find_path (graph: int graph) forbidden id1 id2 =
         | None ->
             let arcs = out_arcs graph id1 in
             let rec loop = (function
-                | [] -> [];
+                | [] -> None;
                 | (a, b) :: rest -> 
                     match (find_path graph forbidden b id2) with
                     | 
