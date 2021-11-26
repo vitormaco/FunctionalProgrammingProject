@@ -9,16 +9,18 @@ let add_arc (graph: int graph) id1 id2 n = match (find_arc graph id1 id2) with
     | Some x-> new_arc graph id1 id2 (n+x)
 
 let rec find_path (graph: int graph) forbidden id1 id2 = 
-    let forbidden = (List.append forbidden [Some id1]) in 
+    let forbidden = (List.append forbidden [id1]) in 
     match (find_arc graph id1 id2) with
-        | Some x -> (List.append forbidden [Some id2])
-        | None ->
+        | Some x -> Some (List.append forbidden [id2])
+        | None -> 
             let arcs = out_arcs graph id1 in
             let rec loop = (function
-                | [] -> None;
+                | [] -> [];
                 | (a, b) :: rest -> 
-                    match (find_path graph forbidden b id2) with
-                    | 
-                    |        
+                    match (find_path graph forbidden a id2) with
+                    | None -> loop rest ;
+                    | Some x -> x; 
             ;) in
-            List.append forbidden (loop arcs)
+            match (loop arcs) with 
+            | [] -> None ;
+            | x -> Some (List.append forbidden x)
