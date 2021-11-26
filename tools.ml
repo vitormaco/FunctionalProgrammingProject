@@ -27,4 +27,4 @@ let rec find_path (graph: int graph) forbidden id1 id2 =
             ) in
             match (loop arcs) with
             | [] -> None
-            | node -> Some (List.append forbidden node)
+            | node -> Some node
