@@ -31,20 +31,22 @@ let () =
   let graph = from_file infile in
 
   (* Our code *)
+  (* converts string graph to int graph *)
   let graph_int = gmap graph (fun x -> (int_of_string x)) in
-  let graph = gmap graph_int (fun x -> string_of_int (x)) in
 
   let path = find_path graph_int [] 0 5 in
-
-  let rec print_list = function
-    | (a,b,c)::rest -> Printf.printf "%d->%d label %d\n" a b c ; print_list rest
-    | [] -> ()
+  let updated_graph = match path with
+  | None -> graph_int
+  | Some x ->
+    let path_id1_id2_label = (get_path_info graph_int x) in
+    let max_flow = (List.fold_left (fun acc (id1,id2,label) -> if label < acc then label else acc) Int.max_int path_id1_id2_label) in
+    List.fold_left (fun g (a,b,c) -> add_arc g a b (-max_flow)) graph_int path_id1_id2_label
   in
 
-  (* Rewrite the graph that has been read. *)
-  let () = export_file_graphviz outfile graph _source _sink in
+  (* converts int graph to string graph *)
+  let printable_graph = gmap updated_graph (fun x -> string_of_int (x)) in
 
-  (match path with
-    | None -> Printf.printf "None" ;
-    | Some x -> print_list (get_path_info graph_int x)
-  )
+  (* Rewrite the graph that has been read. *)
+  let () = export_file_graphviz outfile printable_graph _source _sink in
+
+  ()
