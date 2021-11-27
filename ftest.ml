@@ -32,20 +32,19 @@ let () =
 
   (* Our code *)
   let graph_int = gmap graph (fun x -> (int_of_string x)) in
-  let graph = add_arc graph_int 0 2 5 in
-  let graph = gmap graph (fun x -> string_of_int (x)) in
+  let graph = gmap graph_int (fun x -> string_of_int (x)) in
+
   let path = find_path graph_int [] 0 5 in
+
+  let rec print_list = function
+    | (a,b,c)::rest -> Printf.printf "%d->%d label %d\n" a b c ; print_list rest
+    | [] -> ()
+  in
 
   (* Rewrite the graph that has been read. *)
   let () = export_file_graphviz outfile graph _source _sink in
 
-  let rec print_list = function
-      [] -> ()
-      | e::[] -> print_int e ;
-      | e::rest -> print_int e ; print_string "->" ; print_list rest
-  in
-
   (match path with
     | None -> Printf.printf "None" ;
-    | Some x -> print_list x
+    | Some x -> print_list (get_path_info graph_int x)
   )

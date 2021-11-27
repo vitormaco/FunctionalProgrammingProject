@@ -28,3 +28,12 @@ let rec find_path (graph: int graph) vis id1 id2 =
             match (loop arcs) with
             | [] -> None
             | node -> Some node
+
+let get_arc graph id1 id2 = match (find_arc graph id1 id2) with
+| Some x -> x
+| None -> 0
+
+let rec get_path_info graph list = match list with
+    | id1::id2::t -> (id1, id2, (get_arc graph id1 id2)) :: (get_path_info graph (id2::t))
+    | id1::[] -> []
+    | [] -> []

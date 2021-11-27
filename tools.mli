@@ -17,3 +17,6 @@ val add_arc: int graph -> id -> id -> int -> int graph
  *  forbidden is a list of forbidden nodes (they have already been visited)
  *)
 val find_path: int graph -> id list -> id -> id -> path option
+
+(* converts a path into (id1, id2, label) for each pair of nodes from the path *)
+val get_path_info: int graph -> id list -> (Graph.id * Graph.id * int) list
