@@ -9,6 +9,10 @@ val gmap: 'a graph -> ('a -> 'b) -> 'b graph
 
 val clone_without_empty_arcs: int graph -> int graph
 
+val create_flow_graph: int graph -> int graph -> string graph
+
+val clone_without_empty_arcs: int graph -> int graph
+
 (* adds n to the value of the arc between id1 and id2. If the arc does not exist, it is created. *)
 val add_arc: int graph -> id -> id -> int -> int graph
 

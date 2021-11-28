@@ -6,6 +6,32 @@ let gmap (graph:'a graph) f = e_fold graph (fun acc id1 id2 label -> new_arc acc
 
 let clone_without_empty_arcs (graph:'a graph) = e_fold graph (fun acc id1 id2 label -> if label = 0 then acc else new_arc acc id1 id2 label) (clone_nodes graph)
 
+let create_flow_graph original_graph residual_graph =
+    let flow_graph = e_fold
+        original_graph
+        (
+            fun acc id1 id2 label -> new_arc acc id1 id2
+            (
+                match find_arc residual_graph id1 id2 with
+                | None -> label
+                | Some x -> (label-x)
+            )
+        )
+        (clone_nodes original_graph)
+    in
+
+    e_fold
+        flow_graph
+        (
+            fun acc id1 id2 label -> new_arc acc id1 id2
+            (
+                match find_arc original_graph id1 id2 with
+                | None -> string_of_int label
+                | Some x -> Printf.sprintf "%d/%d" label x
+            )
+        )
+        (clone_nodes flow_graph)
+
 let add_arc (graph: int graph) id1 id2 n = match (find_arc graph id1 id2) with
     | None -> new_arc graph id1 id2 n
     | Some x-> new_arc graph id1 id2 (n+x)

@@ -31,43 +31,28 @@ let () =
   let original_graph = from_file infile in
 
   (* Our code *)
+
   (* converts string graph to int graph *)
-  let graph_int = gmap original_graph (fun x -> (int_of_string x)) in
+  let original_graph_int = gmap original_graph (fun x -> (int_of_string x)) in
 
   let rec ford_fulkerson input_graph =
   (
     let path = find_path input_graph [] _source _sink in
-
-    (* ----- debug part ----- *)
-    let rec print_list = function
-      | (a,b,c)::[] -> Printf.printf "%d->%d\n" a b ;
-      | (a,b,c)::rest -> Printf.printf "%d->" a ; print_list rest
-      | [] -> ()
-    in
-    let print_path path = match path with
-      | None -> Printf.printf "None" ;
-      | Some x -> print_list (get_path_info graph_int x)
-    in
-    let _ = print_path path in
-    (* ----- debug part end ----- *)
-
     match path with
     | None -> input_graph
     | Some x ->
       let path_id1_id2_label = (get_path_info input_graph x) in
       let max_flow = (List.fold_left (fun acc (id1,id2,label) -> if label < acc then label else acc) Int.max_int path_id1_id2_label) in
       let graphs_with_new_arcs = List.fold_left (fun g (a,b,c) -> add_arc (add_arc g b a max_flow) a b (-max_flow)) input_graph path_id1_id2_label in
-      let final_graph = clone_without_empty_arcs graphs_with_new_arcs in
-      ford_fulkerson final_graph
+      let residual_graph = clone_without_empty_arcs graphs_with_new_arcs in
+      ford_fulkerson residual_graph
     )
   in
 
-  let result = ford_fulkerson graph_int in
-
-  (* converts int graph to string graph *)
-  let printable_graph = gmap result (fun x -> string_of_int (x)) in
+  let result_residual_graph = ford_fulkerson original_graph_int in
+  let flow_graph = create_flow_graph original_graph_int result_residual_graph in
 
   (* Rewrite the graph that has been read. *)
-  let () = export_file_graphviz outfile printable_graph _source _sink in
+  let () = export_file_graphviz outfile flow_graph _source _sink in
 
   ()
