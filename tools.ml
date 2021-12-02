@@ -65,3 +65,16 @@ let rec get_path_info graph list = match list with
     | id1::id2::t -> (id1, id2, (get_arc graph id1 id2)) :: (get_path_info graph (id2::t))
     | id1::[] -> []
     | [] -> []
+
+let rec ford_fulkerson input_graph _source _sink =
+(
+    let path = find_path input_graph [] _source _sink in
+    match path with
+    | None -> input_graph
+    | Some x ->
+    let path_id1_id2_label = (get_path_info input_graph x) in
+    let max_flow = (List.fold_left (fun min (id1,id2,label) -> if label < min then label else min) Int.max_int path_id1_id2_label) in
+    let graphs_with_new_arcs = List.fold_left (fun g (a,b,c) -> add_arc (add_arc g b a max_flow) a b (-max_flow)) input_graph path_id1_id2_label in
+    let residual_graph = clone_without_empty_arcs graphs_with_new_arcs in
+    ford_fulkerson residual_graph _source _sink
+)
