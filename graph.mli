@@ -5,8 +5,6 @@ type 'a graph
 (* Each node has a unique identifier (a number). *)
 type id = int
 
-type path = id list
-
 exception Graph_error of string
 
 

@@ -1,5 +1,7 @@
 open Graph
 
+type path = id list
+
 (* returns a new graph having the same nodes than gr, but no arc. (code : one line)
 In order to find your errors more quickly, you may add an annotation : let clone_nodes (gr:'a graph) = ... *)
 val clone_nodes: 'a graph -> 'b graph

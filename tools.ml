@@ -1,5 +1,7 @@
 open Graph
 
+type path = id list
+
 let clone_nodes (graph:'a graph) = n_fold graph new_node empty_graph
 
 let gmap (graph:'a graph) f = e_fold graph (fun acc id1 id2 label -> new_arc acc id1 id2 (f label)) (clone_nodes graph)
