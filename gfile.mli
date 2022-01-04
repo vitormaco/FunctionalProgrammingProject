@@ -12,6 +12,7 @@ val from_file: path -> string graph
 * If necessary, use gmap (to be written by you) to prepare the input graph. *)
 val write_file: path -> string graph -> unit
 
+(* export graph to graph viz format *)
 val export_file_graphviz: path -> string graph -> int -> int -> unit
 
 
