@@ -15,7 +15,7 @@ build:
 	@ocamlc -o ftest graph.cmo gfile.cmo tools.cmo ftest.ml
 
 clean:
-	@rm *.cmo *.cmi ftest test_cases/*.svg test_cases/*.viz -f
+	@rm *.cmo *.cmi ftest ctest test_cases/*.svg test_cases/*.viz -f
 	@echo "cleaned"
 
 gen_svgs:

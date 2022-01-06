@@ -1,4 +1,4 @@
-(* Read a city from a file *)
+(* Read a company from a file *)
 open Company
 
 type path = string

@@ -1,6 +1,7 @@
 open Graph
 open Company
 
+(* Main function that converts the company into a graph *)
 let create_graph_by_company company graph = 
     let length = (List.length company) in
     let source = (length*2) in
@@ -14,6 +15,7 @@ let create_graph_by_company company graph =
         new_node g sink
     in
 
+    (* All the factories in the company. 2 nodes by factory *)
     let create_factories_nodes g = 
         let rec loop cnt g = match cnt with
         | (-1) -> g
@@ -25,6 +27,7 @@ let create_graph_by_company company graph =
         loop (length-1) g
     in
 
+    (* Source -> Supply node of factory // Demand node of factory -> Sink *)
     let connect_factories_with_source_and_sink g =
         let rec loop cnt g = match cnt with
         | (-1) -> g
@@ -38,7 +41,7 @@ let create_graph_by_company company graph =
         loop (length-1) g
     in
 
-
+    (* Each Supply node with all Demand nodes *)
     let connect_factories g = 
         let length = (List.length company) in
 
@@ -55,6 +58,7 @@ let create_graph_by_company company graph =
         loop (length-1) g
     in
 
+    (* We make the process *)
     let process graph = 
         let graph = create_source_node graph in
         let graph = create_sink_node graph in

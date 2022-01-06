@@ -28,8 +28,8 @@ let read_comment company line =
     Printf.printf "Unknown line:\n%s\n%!" line ;
     failwith "from_file"
 
+(* Read company file. *)
 let from_cfile path =
-
   let infile = open_in path in
 
   (* Read all lines until end of file. *)
