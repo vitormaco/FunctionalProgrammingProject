@@ -2,37 +2,37 @@ open Graph
 open Company
 
 let create_graph_by_company company graph = 
+    let length = (List.length company) in
+    let source = (length*2) in
+    let sink = (length*2+1) in
+    
     let create_source_node g = 
-        new_node g 0
+        new_node g source
     in
 
     let create_sink_node g = 
-        new_node g 1
+        new_node g sink
     in
 
     let create_factories_nodes g = 
-        let length = (List.length company) in
-
         let rec loop cnt g = match cnt with
-        | 1 -> g
+        | (-1) -> g
         | _ -> 
             let g = (new_node g cnt) in
-            loop (cnt-1) (new_node g (cnt-1 + ((length-2)*2)))
+            loop (cnt-1) (new_node g (cnt + length))
         in 
 
-        loop (length+1) g
+        loop (length-1) g
     in
 
     let connect_factories_with_source_and_sink g =
-        let length = (List.length company) in
-
         let rec loop cnt g = match cnt with
         | (-1) -> g
         | _ -> 
         (
             let (_, (supply, demand)) = (List.nth company cnt) in
-            let g = loop (cnt-1) (new_arc g 0 (cnt+2) supply) in
-            loop (cnt-1) (new_arc g ((cnt+1)+((length-2)*2)) 1 demand)
+            let g = (new_arc g source cnt supply) in
+            loop (cnt-1) (new_arc g (cnt+length) sink demand)
         )
         in 
         loop (length-1) g
@@ -42,11 +42,17 @@ let create_graph_by_company company graph =
     let connect_factories g = 
         let length = (List.length company) in
 
+        let rec loop_arcs id cnt g = match cnt with 
+            | (-1) -> g
+            | _ -> let (_, (_, demand)) = (List.nth company (cnt)) in 
+            loop_arcs id (cnt-1) (new_arc g id (cnt+length) demand)
+        in 
+
         let rec loop cnt g = match cnt with
-        | 1 -> g
-        | _ -> let g = (new_arc g cnt ((cnt-1)+((length-2)*2)) Int.max_int) in loop (cnt-1) g
+        | (-1) -> g
+        | _ -> let g = loop_arcs cnt (length-1) g in loop (cnt-1) g
         in
-        loop (length+1) g
+        loop (length-1) g
     in
 
     let process graph = 

@@ -18,10 +18,11 @@ let () =
   (* Open file *)
   let company = from_cfile _infile in
 
-  let original_graph_int = create_graph_by_company company empty_graph in
+  let length = (List.length company) in
+  let _source = (length*2) in
+  let _sink = (length*2+1) in
 
-  let _source = 0 in
-  let _sink = 1 in
+  let original_graph_int = create_graph_by_company company empty_graph in
 
   (* run the algorithm and get the residual graph *)
   let residual_graph = ford_fulkerson original_graph_int _source _sink in

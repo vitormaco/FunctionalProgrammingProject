@@ -3,5 +3,5 @@
 Toulouse 90 40
 Paris 200 100
 Lyon 50 60
-Bordeaux 35 50
-Nantes 90 10
+Bordeaux 35 500
+Nantes 90 100
