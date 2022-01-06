@@ -15,7 +15,9 @@ let create_graph_by_company company graph =
 
         let rec loop cnt g = match cnt with
         | 1 -> g
-        | _ -> loop (cnt-1) (new_node g cnt)
+        | _ -> 
+            let g = (new_node g cnt) in
+            loop (cnt-1) (new_node g (cnt-1 + ((length-2)*2)))
         in 
 
         loop (length+1) g
@@ -30,7 +32,7 @@ let create_graph_by_company company graph =
         (
             let (_, (supply, demand)) = (List.nth company cnt) in
             let g = loop (cnt-1) (new_arc g 0 (cnt+2) supply) in
-            loop (cnt-1) (new_arc g (cnt+2) 1 demand)
+            loop (cnt-1) (new_arc g ((cnt+1)+((length-2)*2)) 1 demand)
         )
         in 
         loop (length-1) g
@@ -41,9 +43,9 @@ let create_graph_by_company company graph =
         let length = (List.length company) in
 
         let rec loop cnt g = match cnt with
-        | 2 -> new_arc g 2 (length+1) Int.max_int
-        | _ -> loop (cnt-1) (new_arc g cnt (cnt-1) Int.max_int)
-        in 
+        | 1 -> g
+        | _ -> let g = (new_arc g cnt ((cnt-1)+((length-2)*2)) Int.max_int) in loop (cnt-1) g
+        in
         loop (length+1) g
     in
 
