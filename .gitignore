@@ -1,5 +1,6 @@
 *.cmo
 *.cmi
 ftest
+ctest
 test_cases/*.viz
 test_cases/*.svg
