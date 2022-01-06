@@ -24,10 +24,10 @@ gen_svgs:
 	@echo "generated"
 
 medium: build
+	@cat test_cases/$(COMPANY).txt
+	@echo ""
 	./ctest test_cases/$(COMPANY).txt test_cases/$(COMPANY).viz
 	@echo ""
-	@echo ""
-	@cat test_cases/$(COMPANY).txt
 	@echo ""
 	@cat test_cases/$(COMPANY).viz
 	@dot -Tsvg test_cases/$(COMPANY).viz > test_cases/$(COMPANY).svg;

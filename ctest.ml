@@ -18,10 +18,6 @@ let () =
   (* Open file *)
   let company = from_cfile _infile in
 
-  let show_company = (fun name (supply, demand) -> 
-    Printf.printf "Company: %s %d %d\n" name supply demand
-  ) in
-
   let original_graph_int = create_graph_by_company company empty_graph in
 
   let _source = 0 in
@@ -33,6 +29,10 @@ let () =
   (* parse the residual graph to get the parsed string flow graph *)
   let flow_graph = create_flow_graph original_graph_int residual_graph in
 
+
+(*
+  let flow_graph = create_flow_graph original_graph_int original_graph_int in
+*)
   (* Rewrite the graph that has been read. *)
   let () = export_file_graphviz _outfile flow_graph _source _sink in
 

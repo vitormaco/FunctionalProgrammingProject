@@ -27,7 +27,14 @@ let create_flow_graph original_graph residual_graph =
             (
                 match find_arc original_graph id1 id2 with
                 | None -> string_of_int label
-                | Some x -> Printf.sprintf "%d/%d" label x
+                | Some x -> 
+                let inf = Int.max_int in
+                (
+                    if x=inf then
+                        Printf.sprintf "%d/inf" label
+                    else
+                        Printf.sprintf "%d/%d" label x
+                )
             )
         )
         (clone_nodes flow_graph)
