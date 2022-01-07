@@ -1,7 +1,7 @@
 % This is a company with different factories
 
-Toulouse 90 40
+Toulouse 190 40
 Paris 200 100
 Lyon 50 60
 Bordeaux 35 500
-Nantes 90 100
+Nantes 290 100
