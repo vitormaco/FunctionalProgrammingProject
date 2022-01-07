@@ -33,8 +33,11 @@ let () =
   (* Convert the company class into a graph class, with the problem translation *)
   let original_graph_int = create_graph_by_company company empty_graph in
 
+  (* Get weights of a company *)
+  let weights = create_weights_list original_graph_int company in
+
   (* run the algorithm and get the residual graph *)
-  let residual_graph = ford_fulkerson original_graph_int _source _sink in
+  let residual_graph = ford_fulkerson original_graph_int weights _source _sink in
 
   (* parse the residual graph to get the parsed string flow graph *)
   let flow_graph = create_flow_graph original_graph_int residual_graph in

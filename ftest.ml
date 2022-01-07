@@ -29,7 +29,7 @@ let () =
   let original_graph_int = gmap original_graph (fun x -> (int_of_string x)) in
 
   (* run the algorithm and get the residual graph *)
-  let residual_graph = ford_fulkerson original_graph_int _source _sink in
+  let residual_graph = ford_fulkerson original_graph_int [] _source _sink in
 
   (* parse the residual graph to get the parsed string flow graph *)
   let flow_graph = create_flow_graph original_graph_int residual_graph in
