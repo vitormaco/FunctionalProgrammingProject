@@ -16,30 +16,30 @@ let create_graph_by_company company graph =
     in
 
     (* All the factories in the company. 2 nodes by factory *)
-    let create_factories_nodes g =
-        let rec loop cnt g = match cnt with
-        | (-1) -> g
-        | _ ->
-            let g = (new_node g cnt) in
-            loop (cnt-1) (new_node g (cnt + length))
+    let create_factories_nodes graph =
+        let rec loop graph count =
+            if count = length then
+                graph
+            else
+                let graph = new_node graph count in
+                let graph = new_node graph (count+length) in
+                loop graph (count+1)
         in
-
-        loop (length-1) g
+        loop graph 0
     in
 
     (* Source -> Supply node of factory // Demand node of factory -> Sink *)
-    let connect_factories_with_source_and_sink g =
-        let rec loop cnt g = match cnt with
-        | (-1) -> g
-        | _ ->
-        (
-            let (_, (supply, demand)) = (List.nth company cnt) in
-            let g = (new_arc g source cnt supply) in
-            let g = (new_arc g (cnt+length) sink demand) in
-            loop (cnt-1) g
-        )
+    let connect_factories_with_source_and_sink graph =
+        let rec loop graph count =
+            if count = length then
+                graph
+            else
+                let (_, (supply, demand)) = (List.nth company count) in
+                let graph = (new_arc graph source count supply) in
+                let graph = (new_arc graph (count+length) sink demand) in
+                loop graph (count+1)
         in
-        loop (length-1) g
+        loop graph 0
     in
 
     (* Each Supply node with all Demand nodes *)
