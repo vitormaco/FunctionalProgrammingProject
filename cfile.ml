@@ -70,8 +70,8 @@ let export_file_graphviz_company path graph company source sink =
   (* Write in this file. *)
   fprintf ff "digraph my_graph {\n" ;
   fprintf ff "\trankdir=LR;\n" ;
-  fprintf ff "\tnode [shape = doublecircle]; source sink;\n" ;
-  fprintf ff "\tnode [shape = circle];\n" ;
+  fprintf ff "\tnode [fixedsize=true, shape = cylinder, width=1 ]; Supply Demand;\n" ;
+  fprintf ff "\tnode [fixedsize=true, shape = box3d, width=1];\n" ;
   fprintf ff "\n" ;
 
   (* Write all arcs *)
@@ -80,8 +80,8 @@ let export_file_graphviz_company path graph company source sink =
       (* Condition for medium arcs *)
       if (not (id1 < length && id2>=length && id2 < length*2)) then 
       (
-        let nameid1 = if(id1 = length*2) then "source" else let (x,_) = (List.nth company (id1-length)) in x in
-        let nameid2 = if(id2 = length*2+1) then "sink" else let (x,_) = (List.nth company (id2)) in x in
+        let nameid1 = if(id1 = length*2) then "Supply" else let (x,_) = (List.nth company (id1-length)) in x in
+        let nameid2 = if(id2 = length*2+1) then "Demand" else let (x,_) = (List.nth company (id2)) in x in
         fprintf ff "\t%s -> %s [label = \"%s\"];\n" nameid1 nameid2 lbl 
       ); count + 1) 
       0 

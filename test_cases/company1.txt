@@ -5,3 +5,10 @@ Paris 200 100
 Lyon 50 60
 Bordeaux 35 500
 Nantes 290 100
+Lille 190 40
+Marseille 200 100
+Nice 50 60
+Strasbourg 35 500
+Narbonne 290 100
+Rennes 290 100
+
