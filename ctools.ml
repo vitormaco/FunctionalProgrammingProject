@@ -9,7 +9,7 @@ let create_weights_list graph_company company =
     (
         fun acc (factory,_) ->
         let (_, (_,_,cost)) = List.nth company factory in
-            List.append acc [(source,factory, cost)]
+            List.append acc [(source,factory, cost);(factory,source,-cost)]
     )
     [] arcs
 
