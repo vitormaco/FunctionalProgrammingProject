@@ -43,8 +43,9 @@ let () =
   let flow_graph = create_flow_graph original_graph_int residual_graph in
 
   (* Rewrite the graph that has been read. *)
+  (* This is the company name, parsed graph *)
   let () = export_file_graphviz_company _outfile flow_graph company _source _sink in
 
-  (* Rewrite the graph that has been read. *)
-  let () = export_file_graphviz _outfile flow_graph _source _sink in
+  (* This is the full graph with all the arcs *)
+  (* let () = export_file_graphviz _outfile flow_graph _source _sink in *)
   ()
