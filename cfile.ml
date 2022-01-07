@@ -90,3 +90,41 @@ let export_file_graphviz_company path graph company source sink =
 
   close_out ff ;
   ()
+
+
+let export_file_graphviz_company_full path graph company source sink =
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "digraph my_graph {\n" ;
+  fprintf ff "\trankdir=LR;\n" ;
+  fprintf ff "\tnode [fixedsize=true, shape = cylinder, width=5 ]; Supply Demand;\n" ;
+  fprintf ff "\tnode [fixedsize=true, shape = box3d, width=5];\n" ;
+  fprintf ff "\n" ;
+
+  (* Write all arcs *)
+  let _ = e_fold graph (fun count id1 id2 lbl ->
+      let length = List.length company in
+      (* Condition for medium arcs *)
+      (
+        let nameid1 =
+          if (id1 = length*2) then
+            "Supply"
+        else
+          let (x,_) = (List.nth company (id1 mod length)) in x
+        in
+        let nameid2 = if (id2 = length*2+1) then
+          "Demand"
+        else
+          let (x,_) = (List.nth company (id2 mod length)) in x
+        in
+        fprintf ff "\t%s -> %s [label = \"%s\"];\n" nameid1 nameid2 lbl
+      ); count + 1)
+      0
+  in
+
+  fprintf ff "}\n" ;
+
+  close_out ff ;
+  ()
