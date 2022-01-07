@@ -75,16 +75,16 @@ let export_file_graphviz_company path graph company source sink =
   fprintf ff "\n" ;
 
   (* Write all arcs *)
-  let _ = e_fold graph (fun count id1 id2 lbl -> 
+  let _ = e_fold graph (fun count id1 id2 lbl ->
       let length = List.length company in
       (* Condition for medium arcs *)
-      if (not (id1 < length && id2>=length && id2 < length*2)) then 
+      if (not (id1 < length && id2>=length && id2 < length*2)) then
       (
         let nameid1 = if(id1 = length*2) then "Supply" else let (x,_) = (List.nth company (id1-length)) in x in
         let nameid2 = if(id2 = length*2+1) then "Demand" else let (x,_) = (List.nth company (id2)) in x in
-        fprintf ff "\t%s -> %s [label = \"%s\"];\n" nameid1 nameid2 lbl 
-      ); count + 1) 
-      0 
+        fprintf ff "\t%s -> %s [label = \"%s\"];\n" nameid1 nameid2 lbl
+      ); count + 1)
+      0
   in
   fprintf ff "}\n" ;
 
