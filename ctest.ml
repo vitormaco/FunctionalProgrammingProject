@@ -40,6 +40,6 @@ let () =
   let flow_graph = create_flow_graph original_graph_int residual_graph in
 
   (* Rewrite the graph that has been read. *)
-  let () = export_file_graphviz _outfile flow_graph _source _sink in
+  let () = export_file_graphviz_company _outfile flow_graph company _source _sink in
 
   ()

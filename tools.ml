@@ -66,7 +66,7 @@ let rec find_path (graph: int graph) initial target =
     in
 
     let get_w id1 id2 = match (find_arc graph id1 id2) with
-        | Some x -> 0
+        | Some x -> 1
         | None -> (-1)
     in
 
