@@ -61,7 +61,7 @@ let create_graph_by_company company graph =
         let rec loop_arcs id cnt g = match cnt with
             | (-1) -> g
             | _ -> let (_, (_, demand, _)) = (List.nth company (cnt)) in
-            loop_arcs id (cnt-1) (new_arc g id (cnt+length) demand)
+            loop_arcs id (cnt-1) (new_arc g id (cnt+length) max_int)
         in
 
         let rec loop cnt g = match cnt with
