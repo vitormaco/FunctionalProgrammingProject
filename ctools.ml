@@ -2,27 +2,27 @@ open Graph
 open Company
 
 (* Main function that converts the company into a graph *)
-let create_graph_by_company company graph = 
+let create_graph_by_company company graph =
     let length = (List.length company) in
     let source = (length*2) in
     let sink = (length*2+1) in
-    
-    let create_source_node g = 
+
+    let create_source_node g =
         new_node g source
     in
 
-    let create_sink_node g = 
+    let create_sink_node g =
         new_node g sink
     in
 
     (* All the factories in the company. 2 nodes by factory *)
-    let create_factories_nodes g = 
+    let create_factories_nodes g =
         let rec loop cnt g = match cnt with
         | (-1) -> g
-        | _ -> 
+        | _ ->
             let g = (new_node g cnt) in
             loop (cnt-1) (new_node g (cnt + length))
-        in 
+        in
 
         loop (length-1) g
     in
@@ -31,25 +31,26 @@ let create_graph_by_company company graph =
     let connect_factories_with_source_and_sink g =
         let rec loop cnt g = match cnt with
         | (-1) -> g
-        | _ -> 
+        | _ ->
         (
             let (_, (supply, demand)) = (List.nth company cnt) in
             let g = (new_arc g source cnt supply) in
-            loop (cnt-1) (new_arc g (cnt+length) sink demand)
+            let g = (new_arc g (cnt+length) sink demand) in
+            loop (cnt-1) g
         )
-        in 
+        in
         loop (length-1) g
     in
 
     (* Each Supply node with all Demand nodes *)
-    let connect_factories g = 
+    let connect_factories g =
         let length = (List.length company) in
 
-        let rec loop_arcs id cnt g = match cnt with 
+        let rec loop_arcs id cnt g = match cnt with
             | (-1) -> g
-            | _ -> let (_, (_, demand)) = (List.nth company (cnt)) in 
+            | _ -> let (_, (_, demand)) = (List.nth company (cnt)) in
             loop_arcs id (cnt-1) (new_arc g id (cnt+length) demand)
-        in 
+        in
 
         let rec loop cnt g = match cnt with
         | (-1) -> g
@@ -59,7 +60,7 @@ let create_graph_by_company company graph =
     in
 
     (* We make the process *)
-    let process graph = 
+    let process graph =
         let graph = create_source_node graph in
         let graph = create_sink_node graph in
         let graph = create_factories_nodes graph in
