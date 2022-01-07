@@ -65,19 +65,9 @@ let rec find_path (graph: int graph) initial target =
         | (x,y,z)::rest -> if x=node then z else (get_node_parent rest node)
     in
 
-    let get_w id1 id2 = match (id1,id2) with
-    | (0,3) -> 10
-    | (0,2) -> 10
-    | (0,1) -> 10
-    | (1,4) -> 10
-    | (1,5) -> 10
-    | (2,4) -> 10
-    | (3,2) -> 10
-    | (3,4) -> 10
-    | (3,1) -> 10
-    | (4,5) -> 10
-    | x -> -1
-
+    let get_w id1 id2 = match (find_arc graph id1 id2) with
+        | Some x -> 0
+        | None -> (-1)
     in
 
     let all_edges = e_fold graph (fun acc id1 id2 lbl ->
