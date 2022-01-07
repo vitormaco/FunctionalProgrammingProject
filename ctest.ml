@@ -45,4 +45,6 @@ let () =
   (* Rewrite the graph that has been read. *)
   let () = export_file_graphviz_company _outfile flow_graph company _source _sink in
 
+  (* Rewrite the graph that has been read. *)
+  let () = export_file_graphviz _outfile flow_graph _source _sink in
   ()
