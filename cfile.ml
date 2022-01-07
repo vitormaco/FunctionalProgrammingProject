@@ -17,7 +17,7 @@ type path = string
 
 (* Reads a line with a city. *)
 let read_factory company line =
-  try Scanf.sscanf line "%s %d %d" (fun name supply demand -> new_factory company name (supply, demand))
+  try Scanf.sscanf line "%s %d %d %d" (fun name supply demand cost -> new_factory company name (supply, demand, cost))
   with e ->
     Printf.printf "Cannot read factory in line - %s:\n%s\n%!" (Printexc.to_string e) line ;
     failwith "from_file"

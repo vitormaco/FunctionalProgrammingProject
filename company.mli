@@ -3,7 +3,7 @@
 type name = string
 
 (* Each factory has stats*)
-type stats = (int * int)
+type stats = (int * int * int)
 
 (* Type of a company in which factories stats have labels of type 'a. *)
 type company = (name * stats) list

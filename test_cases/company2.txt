@@ -1,0 +1,14 @@
+% This is a company with different factories
+
+Toulouse 590 40 1
+Paris 200 100 1
+Lyon 50 60 1
+Bordeaux 35 500 1
+Nantes 290 100 1
+Lille 190 40 1000
+Marseille 200 100 1
+Nice 50 60 1
+Strasbourg 35 500 1
+Narbonne 290 100 1
+Rennes 290 100 1
+

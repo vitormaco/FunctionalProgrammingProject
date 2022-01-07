@@ -44,7 +44,7 @@ let add_arc (graph: int graph) id1 id2 n = match (find_arc graph id1 id2) with
     | Some x-> new_arc graph id1 id2 (n+x)
 
 
-let rec find_path (graph: int graph) initial target =
+let rec find_path (graph: int graph) weights initial target =
     let node_cost_parent =
         (n_fold graph
         (fun acc id -> let value = if id=initial then (id, 0, -1) else (id, max_int, -1) in List.append [value] acc)
@@ -65,14 +65,14 @@ let rec find_path (graph: int graph) initial target =
         | (x,y,z)::rest -> if x=node then z else (get_node_parent rest node)
     in
 
-    let get_w id1 id2 = match (find_arc graph id1 id2) with
-        | Some x -> 1
-        | None -> (-1)
+    let rec get_w weights id1 id2 = match weights with      
+        | [] -> 0
+        | (src, dest, w)::rest -> if (id1=src && id2=dest) then w else (get_w rest id1 id2)
     in
 
     let all_edges = e_fold graph (fun acc id1 id2 lbl ->
         if lbl != 0 then
-            List.append acc [(id1,id2,(get_w id1 id2))]
+            List.append acc [(id1,id2,(get_w weights id1 id2))]
         else
             acc
         ) [] in
@@ -123,9 +123,9 @@ let rec get_path_info graph list = match list with
     | id1::[] -> []
     | [] -> []
 
-let rec ford_fulkerson input_graph _source _sink =
+let rec ford_fulkerson input_graph weights _source _sink =
 (
-    let path = find_path input_graph _source _sink in
+    let path = find_path input_graph weights _source _sink in
     match path with
     | [] -> input_graph
     | x ->
@@ -135,5 +135,5 @@ let rec ford_fulkerson input_graph _source _sink =
         let max_flow = (List.fold_left (fun min (id1,id2,label) -> if label < min then label else min) Int.max_int path_id1_id2_label) in
         (* update the path arcs removing the max flow and adding another arc the other way around *)
         let residual_graph = List.fold_left (fun g (a,b,c) -> add_arc (add_arc g b a max_flow) a b (-max_flow)) input_graph path_id1_id2_label in
-        ford_fulkerson residual_graph _source _sink
+        ford_fulkerson residual_graph weights _source _sink
 )

@@ -1,6 +1,18 @@
 open Graph
 open Company
 
+let create_weights_list graph_company company =
+    let length = List.length company in
+    let source = length*2 in
+    let arcs = out_arcs graph_company source in
+    List.fold_left
+    (
+        fun acc (factory,_) ->
+        let (_, (_,_,cost)) = List.nth company factory in
+            List.append acc [(source,factory, cost)]
+    )
+    [] arcs
+
 (* Main function that converts the company into a graph *)
 let create_graph_by_company company graph =
     let length = (List.length company) in
@@ -34,7 +46,7 @@ let create_graph_by_company company graph =
             if count = length then
                 graph
             else
-                let (_, (supply, demand)) = (List.nth company count) in
+                let (_, (supply, demand, cost)) = (List.nth company count) in
                 let graph = (new_arc graph source count supply) in
                 let graph = (new_arc graph (count+length) sink demand) in
                 loop graph (count+1)
@@ -48,7 +60,7 @@ let create_graph_by_company company graph =
 
         let rec loop_arcs id cnt g = match cnt with
             | (-1) -> g
-            | _ -> let (_, (_, demand)) = (List.nth company (cnt)) in
+            | _ -> let (_, (_, demand, _)) = (List.nth company (cnt)) in
             loop_arcs id (cnt-1) (new_arc g id (cnt+length) demand)
         in
 
